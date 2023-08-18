@@ -37,11 +37,10 @@ public class MovieController {
     }
 
     @PostMapping("/forms")
-    public String createMovie(CreateMovieDto data, Model model) {
+    public String createMovie(CreateMovieDto data) {
         Movie newMovie = createMovie.createMovie(data);
         listMovie.add(newMovie);
 
-        model.addAttribute("list", listMovie);
-        return "movies/listMovies";
+        return "redirect:/movies";
     }
 }
