@@ -1,28 +1,33 @@
 <!DOCTYPE html>
-<html lang="pt-br" xmlns:th="http://thymeleaf.org">
+<html lang="pt-br"
+      xmlns:th="http://thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{template.html}">
 <head>
-    <meta charset="UTF-8">
     <title>List of Movies</title>
 </head>
 <body>
-    <h1>List of Movies</h1>
-    <table>
-        <thead>
-            <tr>
-                <th>Name</th>
-                <th>Duration</th>
-                <th>Year of Release</th>
-                <th>Genre</th>
+    <div layout:fragment="content">
+        <h1>List of Movies</h1>
+        <a href="/movies/forms">New Movie</a>
+        <table>
+            <thead>
+                <tr>
+                    <th>Name</th>
+                    <th>Duration</th>
+                    <th>Year of Release</th>
+                    <th>Genre</th>
+                </tr>
+            </thead>
+            <tbody>
+            <tr th:each="movie : ${list}">
+                <td th:text="${movie.name}"></td>
+                <td th:text="${movie.duration}"></td>
+                <td th:text="${movie.yrOfRelease}"></td>
+                <td th:text="${movie.genre}"></td>
             </tr>
-        </thead>
-        <tbody>
-        <tr th:each="movie : ${list}">
-            <td th:text="${movie.name}"></td>
-            <td th:text="${movie.duration}"></td>
-            <td th:text="${movie.yrOfRelease}"></td>
-            <td th:text="${movie.genre}"></td>
-        </tr>
-        </tbody>
-    </table>
+            </tbody>
+        </table>
+    </div>
 </body>
 </html>
