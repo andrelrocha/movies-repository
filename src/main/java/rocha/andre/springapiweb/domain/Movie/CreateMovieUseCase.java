@@ -12,9 +12,9 @@ public class CreateMovieUseCase {
     }
     */
 
-    public CreateMovieUseCase(CreateMovieDto data) {
+    public Movie createMovie(CreateMovieDto data) {
         Movie newMovie = new Movie(data);
-
+        return newMovie;
         //return movieRepository.save(newMovie);
     }
 }
