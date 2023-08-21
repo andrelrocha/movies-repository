@@ -3,11 +3,9 @@ package rocha.andre.springapiweb.controller;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.DeleteMapping;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.*;
 
 import rocha.andre.springapiweb.domain.Movie.*;
 
@@ -20,6 +18,8 @@ public class MovieController {
     CreateMovieUseCase createMovieUseCase;
     @Autowired
     DeleteMovieUseCase deleteMovieUseCase;
+    @Autowired
+    UpdateMovieUseCase updateMovieUseCase;
 
     @Autowired
     private MovieRepository movieRepository;
@@ -33,13 +33,26 @@ public class MovieController {
     }
 
     @DeleteMapping
+    @Transactional
     public String deleteMovie(Long id) {
         deleteMovieUseCase.deleteMovie(id);
         return "redirect:/movies";
     }
 
+    @PutMapping("/forms")
+    @Transactional
+    public String updateMovie(UpdateMovieDto data) {
+        updateMovieUseCase.updateMovie(data);
+        return "redirect:/movies";
+    }
+
     @GetMapping("/forms")
-    public String loadFormsPage() {
+    public String loadFormsPage(Long id, Model model) {
+        if(id != null) {
+            Movie movie = movieRepository.getReferenceById(id);
+            model.addAttribute("movie", movie);
+        }
+
         return "movies/forms";
     }
 

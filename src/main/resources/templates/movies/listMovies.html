@@ -24,9 +24,11 @@
             <tr th:each="movie : ${list}">
                 <td th:text="${movie.name}"></td>
                 <td th:text="${movie.duration}"></td>
-                <td th:text="${movie.yrOfRelease}"></td>
+                <td th:text="${movie.yr_of_release}"></td>
                 <td th:text="${movie.genre}"></td>
                 <td>
+                    <a th:href="@{/movies/forms?id={id}(id=${movie.id})}">Update</a>
+
                     <form action="/movies" method="post">
                         <input type="hidden" name="_method" value="delete">
                         <input type="hidden" name="id" th:value="${movie.id}">

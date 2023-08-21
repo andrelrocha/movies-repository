@@ -18,7 +18,7 @@ public class Movie {
     public Movie(CreateMovieDto data) {
         this.name = data.name();
         this.duration = data.duration();
-        this.yr_of_release = data.yrOfRelease();
+        this.yr_of_release = data.yr_of_release();
         this.genre = data.genre();
     }
 
@@ -44,12 +44,30 @@ public class Movie {
         return duration;
     }
 
-    public Integer getYrOfRelease() {
+    public Integer getyr_of_release() {
         return yr_of_release;
     }
 
     public String getGenre() {
         return genre;
+    }
+
+    public void updateData(UpdateMovieDto data) {
+        if(data.name() != null) {
+            this.name = data.name();
+        }
+
+        if(data.duration() != null) {
+            this.duration = data.duration();
+        }
+
+        if (data.yr_of_release() != null) {
+            this.yr_of_release = data.yr_of_release();
+        }
+
+        if (data.genre() != null) {
+            this.genre = data.genre();
+        }
     }
 }
 
