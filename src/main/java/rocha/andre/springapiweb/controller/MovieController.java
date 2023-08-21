@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import rocha.andre.springapiweb.domain.Movie.CreateMovieDto;
 import rocha.andre.springapiweb.domain.Movie.CreateMovieUseCase;
 import rocha.andre.springapiweb.domain.Movie.Movie;
+import rocha.andre.springapiweb.domain.Movie.MovieRepository;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -18,11 +19,12 @@ import java.util.List;
 @Controller
 @RequestMapping("/movies")
 public class MovieController {
-    List<Movie> listMovie = new ArrayList<>();
 
     @Autowired
-    CreateMovieUseCase createMovie;
+    CreateMovieUseCase createMovieUseCase;
 
+    @Autowired
+    private MovieRepository movieRepository;
 
     @GetMapping("/forms")
     public String loadFormsPage() {
@@ -32,14 +34,14 @@ public class MovieController {
     @GetMapping
     public String loadListPage(Model model) {
         //model, adicione na pagina um atributo "list" que receba listMovie
-        model.addAttribute("list", listMovie);
+        model.addAttribute("list", movieRepository.findAll());
+
         return "movies/listMovies";
     }
 
     @PostMapping("/forms")
     public String createMovie(CreateMovieDto data) {
-        Movie newMovie = createMovie.createMovie(data);
-        listMovie.add(newMovie);
+        createMovieUseCase.createMovie(data);
 
         return "redirect:/movies";
     }

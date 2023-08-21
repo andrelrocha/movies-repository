@@ -1,17 +1,28 @@
 package rocha.andre.springapiweb.domain.Movie;
 
+import jakarta.persistence.*;
+
+@Entity
+@Table(name = "movies")
 public class Movie {
+
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
     private String name;
     private Integer duration;
 
-    private Integer yrOfRelease;
+    private Integer yr_of_release;
     private String genre;
 
     public Movie(CreateMovieDto data) {
         this.name = data.name();
         this.duration = data.duration();
-        this.yrOfRelease = data.yrOfRelease();
+        this.yr_of_release = data.yrOfRelease();
         this.genre = data.genre();
+    }
+
+    public Movie() {
     }
 
     @Override
@@ -19,11 +30,12 @@ public class Movie {
         return "Movie{" +
                 "name='" + name + '\'' +
                 ", duration=" + duration +
-                ", yrOfRelease=" + yrOfRelease +
+                ", yrOfRelease=" + yr_of_release +
                 ", genre='" + genre + '\'' +
                 '}';
     }
 
+    public Long getId() { return id; }
     public String getName() {
         return name;
     }
@@ -33,10 +45,11 @@ public class Movie {
     }
 
     public Integer getYrOfRelease() {
-        return yrOfRelease;
+        return yr_of_release;
     }
 
     public String getGenre() {
         return genre;
     }
 }
+
