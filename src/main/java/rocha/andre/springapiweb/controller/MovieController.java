@@ -4,17 +4,13 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
-import rocha.andre.springapiweb.domain.Movie.CreateMovieDto;
-import rocha.andre.springapiweb.domain.Movie.CreateMovieUseCase;
-import rocha.andre.springapiweb.domain.Movie.Movie;
-import rocha.andre.springapiweb.domain.Movie.MovieRepository;
+import rocha.andre.springapiweb.domain.Movie.*;
 
-import java.util.ArrayList;
-import java.util.List;
 
 @Controller
 @RequestMapping("/movies")
@@ -22,14 +18,11 @@ public class MovieController {
 
     @Autowired
     CreateMovieUseCase createMovieUseCase;
+    @Autowired
+    DeleteMovieUseCase deleteMovieUseCase;
 
     @Autowired
     private MovieRepository movieRepository;
-
-    @GetMapping("/forms")
-    public String loadFormsPage() {
-        return "movies/forms";
-    }
 
     @GetMapping
     public String loadListPage(Model model) {
@@ -39,10 +32,20 @@ public class MovieController {
         return "movies/listMovies";
     }
 
+    @DeleteMapping
+    public String deleteMovie(Long id) {
+        deleteMovieUseCase.deleteMovie(id);
+        return "redirect:/movies";
+    }
+
+    @GetMapping("/forms")
+    public String loadFormsPage() {
+        return "movies/forms";
+    }
+
     @PostMapping("/forms")
     public String createMovie(CreateMovieDto data) {
         createMovieUseCase.createMovie(data);
-
         return "redirect:/movies";
     }
 }
